@@ -10,28 +10,6 @@
 function cwrc_menu_links_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: main-menu_about:node
-  $menu_links['main-menu_about:node'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node',
-    'router_path' => 'node',
-    'link_title' => 'About',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'main-menu_about:node',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -48,
-    'customized' => 1,
-    'language' => 'und',
-    'menu_links_customized' => 1,
-  );
   // Exported menu link: main-menu_collaboratory:islandora
   $menu_links['main-menu_collaboratory:islandora'] = array(
     'menu_name' => 'main-menu',
@@ -50,28 +28,6 @@ function cwrc_menu_links_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -50,
-    'customized' => 1,
-    'language' => 'und',
-    'menu_links_customized' => 1,
-  );
-  // Exported menu link: main-menu_news:node
-  $menu_links['main-menu_news:node'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node',
-    'router_path' => 'node',
-    'link_title' => 'News',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'main-menu_news:node',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -49,
     'customized' => 1,
     'language' => 'und',
     'menu_links_customized' => 1,
@@ -188,13 +144,11 @@ function cwrc_menu_links_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('About');
   t('Collaboratory');
   t('Dashboard');
   t('Help');
   t('Join');
   t('Log in / register');
-  t('News');
 
 
   return $menu_links;

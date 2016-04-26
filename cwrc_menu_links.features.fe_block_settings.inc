@@ -17,6 +17,8 @@ function cwrc_menu_links_default_fe_block_settings() {
     'css_class' => '',
     'custom' => 0,
     'delta' => 'login_link',
+    'i18n_block_language' => array(),
+    'i18n_mode' => 0,
     'module' => 'cwrc_menu_links',
     'node_types' => array(),
     'pages' => '',
