@@ -407,6 +407,13 @@ function _cwrc_menu_links_points_to_path($to_search = '', $path = '') {
   // Break the path into it's parts.
   $path_parts = explode('/', $path);
 
+  // Special case: if the path is simply '/', then there will be two path parts,
+  // each of which are empty strings. We want to reduce this to a single path
+  // part.
+  if (count($path_parts) === 2 && $path_parts[0] === '' && $path_parts[1] === '') {
+    unset($path_parts[1]);
+  }
+
   // If we encounter a part of the path that is a Drupal menu system wildcard,
   // replace it with a regular expression wildcard.
   foreach ($path_parts as &$part) {
