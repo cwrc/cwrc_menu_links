@@ -7,6 +7,8 @@
 
 include_once 'cwrc_menu_links.features.inc';
 
+/* Hooks. */
+
 /**
  * Implements hook_menu().
  */
@@ -80,68 +82,6 @@ function cwrc_menu_links_menu() {
   );
 
   return $items;
-}
-
-/**
- * Page callback: Copy or move an repo object to another collection.
- *
- * Redirects the user to another page where they can either share an object with
- * another collection (copy), or migrate (move) an object to another collection.
- *
- * @param string $path
- *   A path to redirect to, with the placeholder string '%islandora_object'
- *   where the object ID should be inserted.
- * @param string|array $object
- *   The specific ID of the object that the user wants to copy or move.
- */
-function cwrc_menu_links_redirect_share($path, $object) {
-  drupal_goto(str_replace("%islandora_object", $object, $path));
-}
-
-/**
- * Page callback: Share a repo object using a supported [social media] service.
- *
- * Redirects the user to the external service, passing the URL of the object
- * they want to share. The exact action of the external service may vary, but
- * typically, a new "post" is created, containing the URL of the object to be
- * shared.
- *
- * @param string $service
- *   A machine name representing the service we want to share to. The following
- *   services are valid:
- *
- *   - 'facebook': the Facebook social media service
- *   - 'twitter': the Twitter social media service
- *   - 'gplus': the Google Plus social media service
- *
- *   ... any other string will result in the user being redirect to the object's
- *   default view.
- * @param string $object
- *   The specific ID of the object that the user wants to share.
- */
-function cwrc_menu_links_redirect_social($service, $object) {
-  $url = urlencode(url('islandora/object/' . $object, array('absolute' => TRUE)));
-  $exturl = NULL;
-
-  switch ($service) {
-    case "facebook":
-      $exturl = "https://www.facebook.com/sharer/sharer.php?u=" . $url;
-      break;
-
-    case "twitter":
-      $exturl = "https://twitter.com/home?status=" . $url;
-      break;
-
-    case "gplus":
-      $exturl = "https://plus.google.com/share?url=" . $url;
-      break;
-
-    default:
-      $exturl = url('islandora/object/' . $object);
-      return;
-  }
-
-  drupal_goto($exturl);
 }
 
 /**
@@ -314,6 +254,72 @@ function cwrc_menu_links_menu_local_tasks_alter(&$data, $router_item, $root_path
     }
   }
 }
+
+/* Menu callbacks. */
+
+/**
+ * Page callback: Copy or move an repo object to another collection.
+ *
+ * Redirects the user to another page where they can either share an object with
+ * another collection (copy), or migrate (move) an object to another collection.
+ *
+ * @param string $path
+ *   A path to redirect to, with the placeholder string '%islandora_object'
+ *   where the object ID should be inserted.
+ * @param string|array $object
+ *   The specific ID of the object that the user wants to copy or move.
+ */
+function cwrc_menu_links_redirect_share($path, $object) {
+  drupal_goto(str_replace("%islandora_object", $object, $path));
+}
+
+/**
+ * Page callback: Share a repo object using a supported [social media] service.
+ *
+ * Redirects the user to the external service, passing the URL of the object
+ * they want to share. The exact action of the external service may vary, but
+ * typically, a new "post" is created, containing the URL of the object to be
+ * shared.
+ *
+ * @param string $service
+ *   A machine name representing the service we want to share to. The following
+ *   services are valid:
+ *
+ *   - 'facebook': the Facebook social media service
+ *   - 'twitter': the Twitter social media service
+ *   - 'gplus': the Google Plus social media service
+ *
+ *   ... any other string will result in the user being redirect to the object's
+ *   default view.
+ * @param string $object
+ *   The specific ID of the object that the user wants to share.
+ */
+function cwrc_menu_links_redirect_social($service, $object) {
+  $url = urlencode(url('islandora/object/' . $object, array('absolute' => TRUE)));
+  $exturl = NULL;
+
+  switch ($service) {
+    case "facebook":
+      $exturl = "https://www.facebook.com/sharer/sharer.php?u=" . $url;
+      break;
+
+    case "twitter":
+      $exturl = "https://twitter.com/home?status=" . $url;
+      break;
+
+    case "gplus":
+      $exturl = "https://plus.google.com/share?url=" . $url;
+      break;
+
+    default:
+      $exturl = url('islandora/object/' . $object);
+      return;
+  }
+
+  drupal_goto($exturl);
+}
+
+/* Helper functions. */
 
 /**
  * Helper function to return child menu items.
