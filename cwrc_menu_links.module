@@ -14,6 +14,18 @@ include_once 'cwrc_menu_links.features.inc';
  */
 function cwrc_menu_links_menu() {
   $items = array(
+    'islandora/object/%islandora_object/manage/datastreams_add' => array(
+      'title' => 'Add a datastream',
+      'page callback' => 'cwrc_menu_links_redirect_share',
+      'page arguments' => array('islandora/object/%islandora_object/manage/datastreams/add',2),
+      'type' => MENU_LOCAL_TASK,
+      'access callback' => 'islandora_object_access_callback',
+      'access arguments' => array(
+        ISLANDORA_ADD_DS,
+        2,
+      ),
+      'weight' => -30,
+    ),
     'islandora/object/%islandora_object/share' => array(
       'title' => 'Share',
       'page callback' => 'islandora_view_object',
