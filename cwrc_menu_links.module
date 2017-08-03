@@ -79,6 +79,28 @@ function cwrc_menu_links_menu() {
       ),
       'weight' => 3,
     ),
+    'islandora/object/%islandora_object/manage/book-add-page' => array(
+      'title' => 'Add Page',
+      'page callback' => 'cwrc_menu_links_redirect_share',
+      'page arguments' => array('islandora/object/%islandora_object/manage/book/ingest', 2),
+      'type' => MENU_LOCAL_TASK,
+      'access callback' => 'cwrc_menu_links_object_access_callback_book_pages',
+      'access arguments' => array(
+        'edit fedora repository objects',
+        2,
+      ),
+    ),
+    'islandora/object/%islandora_object/manage/book-add-page-zipped' => array(
+      'title' => 'Add Zipped Pages',
+      'page callback' => 'cwrc_menu_links_redirect_share',
+      'page arguments' => array('islandora/object/%islandora_object/manage/book/ingest_zipped', 2),
+      'type' => MENU_LOCAL_TASK,
+      'access callback' => 'cwrc_menu_links_object_access_callback_book_pages',
+      'access arguments' => array(
+        'edit fedora repository objects',
+        2,
+      ),
+    ),
   );
 
   return $items;
@@ -437,4 +459,32 @@ function _cwrc_menu_links_points_to_path($to_search = '', $path = '') {
   // falsy; hence the ===) if the string was not found, and 1 if the string was
   // found.
   return preg_match($pattern, $to_search) === 1;
+}
+
+/**
+ * Checks whether the user can access the given object.
+ *
+ * Checks for object existance, accessiblitly, namespace permissions,
+ * and user permissions
+ *
+ * @param string $perm
+ *   User permission to test for.
+ * @param AbstractObject $object
+ *   The object to test, if NULL given the object doesn't exist or is
+ *   inaccessible.
+ *
+ * @return bool
+ *   TRUE if the user is allowed to access this object, FALSE otherwise.
+ */
+function cwrc_menu_links_object_access_callback_book_pages($perm, $object = NULL) {
+
+  if (!$object && !islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+  $overview = islandora_manage_overview_object($object)['collection']['#markup'];
+  if (strpos($overview, 'Internet Archive Book') === false) {
+    return FALSE;
+  }
+  return islandora_object_access($perm, $object);
 }
