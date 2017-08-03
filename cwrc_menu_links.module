@@ -14,6 +14,17 @@ include_once 'cwrc_menu_links.features.inc';
  */
 function cwrc_menu_links_menu() {
   $items = array(
+    'islandora/object/%islandora_object/locking' => array(
+      'title' => 'Lock/Unlock',
+      'page callback' => 'cwrc_menu_links_redirect_lock',
+      'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+      'access callback' => 'islandora_object_access_callback',
+      'access arguments' => array(
+        'add or remove islandora object lock',
+        2),
+      'weight' => 4,
+    ),
     'islandora/object/%islandora_object/share' => array(
       'title' => 'Share',
       'page callback' => 'islandora_view_object',
@@ -229,6 +240,15 @@ function cwrc_menu_links_menu_local_tasks_alter(&$data, $router_item, $root_path
 
     foreach ($data['tabs'] as &$tab) {
       foreach ($tab['output'] as &$output) {
+        if ($output['#link']['path'] == 'islandora/object/%/locking') {
+          $lock = islandora_object_lock_get_lock_expiry($router_item['map'][2]);
+          if (is_null($lock)) {
+            $output['#link']['title'] = t('Lock');
+          } else {
+            $output['#link']['title'] = t('Unlock');
+          }
+          break;
+        }
         // Get router items with this parent (calls access callbacks).
         $children = _cwrc_menu_links_get_children($output['#link']['tab_root'], $output['#link']['path']);
 
@@ -293,6 +313,15 @@ function cwrc_menu_links_menu_local_tasks_alter(&$data, $router_item, $root_path
  */
 function cwrc_menu_links_redirect_share($path, $object) {
   drupal_goto(str_replace("%islandora_object", $object, $path));
+}
+
+function cwrc_menu_links_redirect_lock($object) {
+  $lock = islandora_object_lock_get_lock_expiry($object);
+  if (is_null($lock)) {
+    drupal_goto('islandora/object/' . $object . '/manage/datastreams/locking/lock');
+  } else {
+    drupal_goto('islandora/object/' . $object . '/manage/datastreams/locking/unlock');
+  }
 }
 
 /**
