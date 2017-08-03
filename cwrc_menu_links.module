@@ -79,6 +79,15 @@ function cwrc_menu_links_menu() {
       ),
       'weight' => 3,
     ),
+    'islandora/object/%islandora_object/manage/collection_batch_import' => array(
+      'title' => 'Batch Import Objects',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_importer_form', 2),
+      'access callback' => 'islandora_importer_access_callback',
+      'access arguments' => array(2),
+      'weight' => -1,
+    ),
   );
 
   return $items;
@@ -132,6 +141,7 @@ function cwrc_menu_links_menu_alter(&$items) {
   $items['islandora/object/%islandora_object/share']['weight'] = 1;
   $items['islandora/object/%islandora_object/manage']['weight'] = 2;
   $items['islandora/object/%islandora_object/annotate-cwrc']['weight'] = 5;
+  $items['islandora/object/%islandora_object/manage/collection']['weight'] = -3;
   $items['islandora/object/%islandora_object/manage/collection/ingest']['weight'] = 2;
   $items['islandora/object/%islandora_object/manage/overview/ingest']['weight'] = 2;
   $items['islandora/object/%islandora_object/edit-cwrc']['weight'] = 3;
