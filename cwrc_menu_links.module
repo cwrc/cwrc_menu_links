@@ -14,6 +14,18 @@ include_once 'cwrc_menu_links.features.inc';
  */
 function cwrc_menu_links_menu() {
   $items = array(
+    'islandora/object/%islandora_object/mods' => array(
+      'title' => 'Edit Record',
+      'page callback' => 'cwrc_menu_links_redirect_share',
+      'page arguments' => array('islandora/edit_form/%islandora_object/MODS',2),
+      'type' => MENU_LOCAL_TASK,
+      'access callback' => 'cwrc_menu_links_object_access_callback_mods',
+      'access arguments' => array(
+        'manage object properties',
+        2,
+      ),
+      'weight' => 3,
+    ),
     'islandora/object/%islandora_object/locking' => array(
       'title' => 'Lock/Unlock',
       'page callback' => 'cwrc_menu_links_redirect_lock',
@@ -488,6 +500,72 @@ function _cwrc_menu_links_points_to_path($to_search = '', $path = '') {
   // falsy; hence the ===) if the string was not found, and 1 if the string was
   // found.
   return preg_match($pattern, $to_search) === 1;
+}
+
+/**
+ * Process available dsids, mime and extensions for a given object.
+ *
+ * @param AbstractObject $object
+ *   The FedoraObject to process available extensions
+ *
+ * @return array()
+ *   An associative array, merged from calls to
+ *   islandora_get_datastreams_requirements_from_content_models()
+ *   and an objects dsid's.
+ */
+function cwrc_menu_links_get_object_extensions(AbstractObject $object) {
+  $extensions = islandora_get_datastreams_requirements_from_models($object->models);
+  foreach ($object as $datastream) {
+    // Could be a datastream not associated in a content model,
+    // such as user added.
+    if (!isset($extensions[$datastream->id])) {
+      // Add the extensions manually.
+      $extensions[$datastream->id] = array(
+        'id' => $datastream->id,
+        'optional' => TRUE,
+        'mime' => array($datastream->mimeType),
+      );
+    }
+  }
+  return $extensions;
+}
+
+/**
+ * Checks whether the user can access the given object.
+ *
+ * Checks for object existance, accessiblitly, namespace permissions,
+ * and user permissions
+ *
+ * @param string $perm
+ *   User permission to test for.
+ * @param AbstractObject $object
+ *   The object to test, if NULL given the object doesn't exist or is
+ *   inaccessible.
+ *
+ * @return bool
+ *   TRUE if the user is allowed to access this object, FALSE otherwise.
+ */
+function cwrc_menu_links_object_access_callback_mods($perm, $object = NULL) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  if (!$object && !islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  $extensions = cwrc_menu_links_get_object_extensions($object);
+  $has_mods = FALSE;
+  foreach ($extensions as $extension) {
+    if ($extension['id'] == 'MODS') {
+      $has_mods = TRUE;
+      break;
+    }
+  }
+  if (!$has_mods) {
+    return FALSE;
+  }
+
+  return islandora_object_access($perm, $object);
 }
 
 /**
