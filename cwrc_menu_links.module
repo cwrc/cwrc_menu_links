@@ -616,9 +616,10 @@ function cwrc_menu_links_object_access_callback_book_pages($perm, $object = NULL
     islandora_display_repository_inaccessible_message();
     return FALSE;
   }
-  $overview = islandora_manage_overview_object($object)['collection']['#markup'];
-  if (strpos($overview, 'Internet Archive Book') === false) {
-    return FALSE;
+  foreach ($object->models as $model) {
+    if($model == 'islandora:bookCModel') {
+      return islandora_object_access($perm, $object);
+    }
   }
-  return islandora_object_access($perm, $object);
+  return FALSE;
 }
