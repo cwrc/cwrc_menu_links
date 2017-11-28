@@ -196,8 +196,7 @@ function cwrc_menu_links_menu_alter(&$items) {
   // Reorder the items in the menu somewhat.
   $items['islandora/object/%islandora_object/share']['weight'] = 1;
   $items['islandora/object/%islandora_object/manage']['weight'] = 2;
-  // They want to hide the Annotation Button.
-  unset($items['islandora/object/%islandora_object/annotate-cwrc']['weight'] );
+
   $items['islandora/object/%islandora_object/manage/collection']['weight'] = -3;
   $items['islandora/object/%islandora_object/manage/collection/ingest']['weight'] = 2;
   $items['islandora/object/%islandora_object/manage/overview/ingest']['weight'] = 2;
@@ -221,10 +220,10 @@ function cwrc_menu_links_menu_alter(&$items) {
   $items['islandora/object/%islandora_object/unlock']['title'] = t('Unlock');
   $items['islandora/object/%islandora_object/unlock']['type'] = MENU_LOCAL_TASK;
   $items['islandora/object/%islandora_object/unlock']['weight'] = 2;
-
+  // They want to hide the Annotation Button.
+  unset($items['islandora/object/%islandora_object/annotate-cwrc'] );
   unset($items['islandora/object/%islandora_object/manage/datastreams/locking/lock']);
   unset($items['islandora/object/%islandora_object/manage/datastreams/locking/unlock']);
-
 }
 
 /**
