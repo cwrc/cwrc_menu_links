@@ -129,7 +129,7 @@ function cwrc_menu_links_menu() {
       'type' => MENU_LOCAL_TASK,
       'access callback' => 'cwrc_menu_links_object_access_callback_book_pages',
       'access arguments' => array(
-        'edit fedora repository objects',
+        'manage object properties',
         2,
       ),
     ),
@@ -140,7 +140,7 @@ function cwrc_menu_links_menu() {
       'type' => MENU_LOCAL_TASK,
       'access callback' => 'cwrc_menu_links_object_access_callback_book_pages',
       'access arguments' => array(
-        'edit fedora repository objects',
+        'manage object properties',
         2,
       ),
     ),
