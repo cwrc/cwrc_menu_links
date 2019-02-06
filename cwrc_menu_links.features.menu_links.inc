@@ -10,7 +10,7 @@
 function cwrc_menu_links_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: main-menu_collaboratory:islandora
+  // Exported menu link: main-menu_collaboratory:islandora.
   $menu_links['main-menu_collaboratory:islandora'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'islandora',
@@ -21,6 +21,7 @@ function cwrc_menu_links_menu_default_menu_links() {
         'title' => '',
       ),
       'identifier' => 'main-menu_collaboratory:islandora',
+      'alter' => TRUE,
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -32,7 +33,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: menu-secondary-menu_collaboratory:islandora
+  // Exported menu link: menu-secondary-menu_collaboratory:islandora.
   $menu_links['menu-secondary-menu_collaboratory:islandora'] = array(
     'menu_name' => 'menu-secondary-menu',
     'link_path' => 'islandora',
@@ -43,6 +44,7 @@ function cwrc_menu_links_menu_default_menu_links() {
         'title' => '',
       ),
       'identifier' => 'menu-secondary-menu_collaboratory:islandora',
+      'alter' => TRUE,
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -54,7 +56,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: menu-secondary-menu_dashboard:admin/dashboard
+  // Exported menu link: menu-secondary-menu_dashboard:admin/dashboard.
   $menu_links['menu-secondary-menu_dashboard:admin/dashboard'] = array(
     'menu_name' => 'menu-secondary-menu',
     'link_path' => 'admin/dashboard',
@@ -65,6 +67,7 @@ function cwrc_menu_links_menu_default_menu_links() {
         'title' => '',
       ),
       'identifier' => 'menu-secondary-menu_dashboard:admin/dashboard',
+      'alter' => TRUE,
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -76,7 +79,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: menu-secondary-menu_help:admin/help
+  // Exported menu link: menu-secondary-menu_help:admin/help.
   $menu_links['menu-secondary-menu_help:admin/help'] = array(
     'menu_name' => 'menu-secondary-menu',
     'link_path' => 'admin/help',
@@ -98,7 +101,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: menu-secondary-menu_join:user/register
+  // Exported menu link: menu-secondary-menu_join:user/register.
   $menu_links['menu-secondary-menu_join:user/register'] = array(
     'menu_name' => 'menu-secondary-menu',
     'link_path' => 'user/register',
@@ -109,6 +112,7 @@ function cwrc_menu_links_menu_default_menu_links() {
         'title' => '',
       ),
       'identifier' => 'menu-secondary-menu_join:user/register',
+      'alter' => TRUE,
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -120,7 +124,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
-  // Exported menu link: menu-tertiary-menu_log-in--register:user/login
+  // Exported menu link: menu-tertiary-menu_log-in--register:user/login.
   $menu_links['menu-tertiary-menu_log-in--register:user/login'] = array(
     'menu_name' => 'menu-tertiary-menu',
     'link_path' => 'user/login',
@@ -131,6 +135,7 @@ function cwrc_menu_links_menu_default_menu_links() {
         'title' => '',
       ),
       'identifier' => 'menu-tertiary-menu_log-in--register:user/login',
+      'alter' => TRUE,
     ),
     'module' => 'menu',
     'hidden' => 0,
@@ -142,6 +147,7 @@ function cwrc_menu_links_menu_default_menu_links() {
     'language' => 'und',
     'menu_links_customized' => 1,
   );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Collaboratory');
@@ -149,7 +155,6 @@ function cwrc_menu_links_menu_default_menu_links() {
   t('Help');
   t('Join');
   t('Log in / register');
-
 
   return $menu_links;
 }
